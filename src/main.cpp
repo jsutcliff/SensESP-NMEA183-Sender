@@ -2,9 +2,14 @@
 #include "sensesp_app_builder.h"
 #include "tcp_client.h"
 
+#include <SoftwareSerial.h>
+
 using namespace sensesp;
 
 ReactESP app;
+SoftwareSerial swSer;
+
+constexpr int NMEATxPin = 13;
 
 void setup() {
   SensESPAppBuilder builder;
@@ -14,9 +19,9 @@ void setup() {
   SetupSerialDebug(115200);
 #endif
 
-  delay(1000);
+  swSer.begin(4800, SERIAL_8N1, -1, NMEATxPin, false, 256);
 
-  TCPClient *client = new TCPClient("leedee.local", 10110);
+  TCPClient *client = new TCPClient("leedee.local", 10110, &swSer);
 
   sensesp_app->start();
 }

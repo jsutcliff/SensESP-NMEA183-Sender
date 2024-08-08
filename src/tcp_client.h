@@ -12,13 +12,14 @@ namespace sensesp {
 
 class TCPClient : public Configurable, public Startable, public ValueProducer<String> {
 public:
-  TCPClient(String address, uint16_t port, String config_path = "");
+  TCPClient(String address, uint16_t port, Stream *tx_stream, String config_path = "");
   virtual void start() override final;
 
 private:
   String address_;
   uint16_t port_;
   AsyncClient *client_;
+  Stream *tx_stream_;
 };
 
 } // namespace sensesp
